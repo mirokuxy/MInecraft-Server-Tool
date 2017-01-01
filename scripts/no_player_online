@@ -1,0 +1,16 @@
+#!/bin/bash
+
+no_player_online(){
+    res=$(msm myserver connected | grep 'No players are connected.')
+    if [[ -n "$res" ]]
+    then 
+        return 0  # no player online
+    else 
+        return 1  # has player online
+    fi
+}
+
+no_player_online
+
+
+ 
