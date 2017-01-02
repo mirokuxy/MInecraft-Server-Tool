@@ -1,0 +1,7 @@
+# schedule shutdown
+*/1 *  * * * . $HOME/utils/.bash_profile; update_last_online_time
+*/5 *  * * * . $HOME/utils/.bash_profile; shutdown_if_inactive
+
+# at start up
+@reboot      . $HOME/utils/.bash_profile; reset_last_online_time
+

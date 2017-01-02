@@ -1,0 +1,11 @@
+#!/bin/bash
+
+LAST_ONLINE_TIME_FILE="../records/last_online_time"
+
+
+caller_path=$(pwd)
+script_folder=$(dirname "${BASH_SOURCE}")
+cd $script_folder  > /dev/null
+
+echo $(date "+%s") > $LAST_ONLINE_TIME_FILE
+

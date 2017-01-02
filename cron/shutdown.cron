@@ -1,4 +1,0 @@
-55  03 * * * sudo shutdown -P +5
-*/1 *  * * * . $HOME/.bash_profile; update_last_online_time
-*/1 *  * * * . $HOME/.bash_profile; shutdown_if_inactive
-

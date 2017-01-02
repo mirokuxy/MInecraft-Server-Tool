@@ -2,7 +2,7 @@
 
 LAST_ONLINE_TIME_FILE="../records/last_online_time"
 SHUTDOWN_ENABLED_FILE="../records/shutdown_enabled"
-ALLOWED_IDLE_TIME=30
+ALLOWED_IDLE_TIME=60    # in minutes
 
 get_idle_time() {
     current_time=$(date "+%s")
@@ -31,7 +31,7 @@ main() {
         idle_time=$(get_idle_time)
         if [ "$idle_time" -ge "$ALLOWED_IDLE_TIME" ]
         then
-            sudo shutdown -P +1 "no player active for $idle_time minutes. shutting down."
+            sudo shutdown -P +5 "no player active for $idle_time minutes. shutting down."
         fi
     fi
 }
