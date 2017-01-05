@@ -1,0 +1,22 @@
+#!/bin/bash
+
+LAST_ONLINE_TIME_FILE="../records/last_online_time"
+
+switch_dir() {
+    caller_path=$(pwd)
+    script_folder=$(dirname "${BASH_SOURCE}")
+    cd $script_folder
+}
+
+get_idle_time() {
+    current_time=$(date "+%s")
+    last_online_time=$(cat $LAST_ONLINE_TIME_FILE)
+    interval=$(expr $current_time - $last_online_time)
+    interval=$(expr $interval / 60)
+    echo $interval
+}
+
+switch_dir
+get_idle_time
+
+

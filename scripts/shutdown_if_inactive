@@ -1,16 +1,14 @@
 #!/bin/bash
 
-LAST_ONLINE_TIME_FILE="../records/last_online_time"
 SHUTDOWN_ENABLED_FILE="../records/shutdown_enabled"
 ALLOWED_IDLE_TIME=60    # in minutes
 
-get_idle_time() {
-    current_time=$(date "+%s")
-    last_online_time=$(cat $LAST_ONLINE_TIME_FILE)
-    interval=$(expr $current_time - $last_online_time)
-    interval=$(expr $interval / 60)
-    echo $interval
+switch_dir() {
+    caller_path=$(pwd)
+    script_folder=$(dirname "${BASH_SOURCE}")
+    cd $script_folder
 }
+
 
 ensure_shutdown_enabled(){
     if [ ! -e "$SHUTDOWN_ENABLED_FILE" ]
@@ -19,16 +17,10 @@ ensure_shutdown_enabled(){
     fi
 }
 
-switch_dir() {
-    caller_path=$(pwd)
-    script_folder=$(dirname "${BASH_SOURCE}")
-    cd $script_folder
-}
-
 main() {    
     if ./no_player_online
     then
-        idle_time=$(get_idle_time)
+        idle_time=$(./get_idle_time)
         if [ "$idle_time" -ge "$ALLOWED_IDLE_TIME" ]
         then
             sudo shutdown -P +5 "no player active for $idle_time minutes. shutting down."
