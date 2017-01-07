@@ -7,7 +7,32 @@ cd $script_folder
 
 current_time=$(date "+%c")
 
-message=$(msm mod-server2 connected)
+validate_message(){
+    message=$1
+    echo $message | grep "Turned off world auto-saving" && return 1
+    echo $message | grep "Saving..." && return 1
+    echo $message | grep "Saved the world" && return 1
+    echo $message | grep "Turned on world auto-saving" && return 1
+    echo $message | grep "Can't keep up!" && return 1
+    echo $message | grep "UUID of player" && return 1
+
+    return 0
+}
+
+_get_status_message(){
+    echo "$(msm mod-server2 connected)"
+}
+
+get_status_message(){
+    message=$(_get_status_message)
+    until validate_message $message; do
+        message=$(_get_status_message)
+    done
+    
+    echo "$message"
+}
+
+message=$(get_status_message)
 res=$(echo $message | grep 'No players are connected.')
 if [[ -n "$res" ]]
 then 
