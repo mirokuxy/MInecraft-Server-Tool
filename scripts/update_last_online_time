@@ -1,5 +1,8 @@
 #!/bin/bash
 
+UPDATE_LOG_FILE="../logs/update_last_online_time.update"
+KEEP_LOG_FILE="../logs/update_last_online_time.keep"
+
 LAST_ONLINE_TIME_FILE="../records/last_online_time"
 
 
@@ -7,9 +10,14 @@ caller_path=$(pwd)
 script_folder=$(dirname "${BASH_SOURCE}")
 cd $script_folder
 
-if ! ./no_player_online
+current_time=$(date "+%c")
+ 
+if ./no_player_online
 then
-    echo $(date "+%s") > $LAST_ONLINE_TIME_FILE
+    echo "$current_time: kept" > $KEEP_LOG_FILE    
+else
+    echo "$current_time: updated" > $UPDATE_LOG_FILE
+    echo "$current_time" > $LAST_ONLINE_TIME_FILE
 fi
 
 

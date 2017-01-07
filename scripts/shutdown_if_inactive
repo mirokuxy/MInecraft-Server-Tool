@@ -1,7 +1,10 @@
 #!/bin/bash
 
+LOG_FILE="../logs/shutdown_if_inactive"
 SHUTDOWN_ENABLED_FILE="../records/shutdown_enabled"
 ALLOWED_IDLE_TIME=60    # in minutes
+
+current_time=$(date "+%c")
 
 switch_dir() {
     caller_path=$(pwd)
@@ -13,6 +16,7 @@ switch_dir() {
 ensure_shutdown_enabled(){
     if [ ! -e "$SHUTDOWN_ENABLED_FILE" ]
     then
+        echo "$current_time: shutdown not enabled." >> $LOG_FILE
         exit 0
     fi
 }
@@ -23,10 +27,15 @@ main() {
         idle_time=$(./get_idle_time)
         if [ "$idle_time" -ge "$ALLOWED_IDLE_TIME" ]
         then
-            sudo shutdown -P +5 "no player active for $idle_time minutes. shutting down."
+            echo "$current_time: idle time $idle_time exceed range $ALLOWED_IDLE_TIME. shutting down" >> $LOG_FILE
+            sudo shutdown -P +2 "no player active for $idle_time minutes. shutting down."
+        else
+            echo "$current_time: idle time $idle_time within range $ALLOWED_IDLE_TIME. not shutting down." >> $LOG_FILE
         fi
-    fi
-}
+    else
+        echo "$current_time: has player online. not shutting down." >> $LOG_FILE    
+    fi 
+} 
 
 switch_dir
 ensure_shutdown_enabled

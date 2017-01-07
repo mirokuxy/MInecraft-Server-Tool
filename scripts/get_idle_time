@@ -9,10 +9,11 @@ switch_dir() {
 }
 
 get_idle_time() {
-    current_time=$(date "+%s")
-    last_online_time=$(cat $LAST_ONLINE_TIME_FILE)
-    interval=$(expr $current_time - $last_online_time)
-    interval=$(expr $interval / 60)
+    current_time_seconds=$(date "+%s")
+    last_online_time_full=$(cat $LAST_ONLINE_TIME_FILE)
+    last_online_time_seconds=$(date -d "$last_online_time_full" "+%s")
+    interval_seconds=$(expr $current_time_seconds - $last_online_time_seconds)
+    interval=$(expr $interval_seconds / 60)
     echo $interval
 }
 

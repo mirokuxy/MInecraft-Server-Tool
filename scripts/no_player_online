@@ -1,16 +1,22 @@
 #!/bin/bash
 
-no_player_online(){
-    res=$(msm mod-server2 connected | grep 'No players are connected.')
-    if [[ -n "$res" ]]
-    then 
-        return 0  # no player online
-    else 
-        return 1  # has player online
-    fi
-}
+LOG_FILE="../logs/no_player_online"
 
-no_player_online
+caller_path=$(pwd)
+script_folder=$(dirname "${BASH_SOURCE}")
+cd $script_folder
+
+current_time=$(date "+%c")
+
+message=$(msm mod-server2 connected)
+res=$(echo $message | grep 'No players are connected.')
+if [[ -n "$res" ]]
+then 
+    exit 0  # no player online
+else 
+    echo "$current_time: [ $message ] are connected." > $LOG_FILE
+    exit 1  # has player online
+fi
 
 
  
