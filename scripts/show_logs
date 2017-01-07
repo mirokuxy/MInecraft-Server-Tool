@@ -1,0 +1,7 @@
+#/!bin/bash
+
+script_folder=$(dirname "${BASH_SOURCE}")
+cd $script_folder
+
+cat ../logs/* | sort -k1 -s
+

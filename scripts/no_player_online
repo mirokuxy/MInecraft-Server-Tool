@@ -2,7 +2,6 @@
 
 LOG_FILE="../logs/no_player_online"
 
-caller_path=$(pwd)
 script_folder=$(dirname "${BASH_SOURCE}")
 cd $script_folder
 

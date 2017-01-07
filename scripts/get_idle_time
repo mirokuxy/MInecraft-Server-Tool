@@ -3,7 +3,6 @@
 LAST_ONLINE_TIME_FILE="../records/last_online_time"
 
 switch_dir() {
-    caller_path=$(pwd)
     script_folder=$(dirname "${BASH_SOURCE}")
     cd $script_folder
 }

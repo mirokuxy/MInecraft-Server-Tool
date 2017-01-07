@@ -7,7 +7,6 @@ ALLOWED_IDLE_TIME=60    # in minutes
 current_time=$(date "+%c")
 
 switch_dir() {
-    caller_path=$(pwd)
     script_folder=$(dirname "${BASH_SOURCE}")
     cd $script_folder
 }
