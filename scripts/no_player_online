@@ -5,10 +5,10 @@ LOG_FILE="../logs/no_player_online"
 script_folder=$(dirname "${BASH_SOURCE}")
 cd $script_folder
 
-current_time=$(date "+%c")
+current_time=$(date)
 
 validate_message(){
-    message=$1
+    message="$*"
     echo $message | grep "Turned off world auto-saving" && return 1
     echo $message | grep "Saving..." && return 1
     echo $message | grep "Saved the world" && return 1
@@ -33,14 +33,11 @@ get_status_message(){
 }
 
 message=$(get_status_message)
-res=$(echo $message | grep 'No players are connected.')
-if [[ -n "$res" ]]
-then 
-    exit 0  # no player online
-else 
-    echo "$current_time: [ $message ] are connected." > $LOG_FILE
-    exit 1  # has player online
-fi
+echo $message | grep 'No players are connected.' > /dev/null  && exit 0
+echo $message | grep 'Server "mod-server2" is not running. No users are connected.' > /dev/null && exit 0
+
+echo "$current_time: [ $message ] are connected." > $LOG_FILE
+exit 1  # has player online
 
 
  

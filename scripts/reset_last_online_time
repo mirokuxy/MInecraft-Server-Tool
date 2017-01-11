@@ -8,7 +8,7 @@ LAST_ONLINE_TIME_FILE="../records/last_online_time"
 script_folder=$(dirname "${BASH_SOURCE}")
 cd $script_folder  > /dev/null
 
-current_time=$(date "+%c")
+current_time=$(date)
 echo "$current_time: reset" > $LOG_FILE
 echo "$current_time" > $LAST_ONLINE_TIME_FILE
 

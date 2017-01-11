@@ -4,7 +4,7 @@ LOG_FILE="../logs/shutdown_if_inactive"
 SHUTDOWN_ENABLED_FILE="../records/shutdown_enabled"
 ALLOWED_IDLE_TIME=60    # in minutes
 
-current_time=$(date "+%c")
+current_time=$(date)
 
 switch_dir() {
     script_folder=$(dirname "${BASH_SOURCE}")
